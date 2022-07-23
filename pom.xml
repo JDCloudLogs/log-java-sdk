@@ -6,7 +6,28 @@
 
     <groupId>com.jdcloud.logs</groupId>
     <artifactId>log-api</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <developers>
+        <developer>
+            <name>liubai</name>
+            <email>liubai@jd.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <url>https://github.com/JDCloudLogs/log-java-sdk</url>
+        <connection>scm:git:https://github.com/JDCloudLogs/log-java-sdk</connection>
+        <developerConnection>scm:git:git@github.com/JDCloudLogs/log-java-sdk.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <licenses>
+        <license>
+            <name>The Apache Software License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
     <properties>
         <protobuf.version>2.5.0</protobuf.version>
@@ -52,43 +73,107 @@
     </dependencies>
 
     <build>
-        <extensions>
-            <extension>
-                <groupId>kr.motd.maven</groupId>
-                <artifactId>os-maven-plugin</artifactId>
-                <version>${os-maven-plugin.version}</version>
-            </extension>
-        </extensions>
+<!--        <extensions>-->
+<!--            <extension>-->
+<!--                <groupId>kr.motd.maven</groupId>-->
+<!--                <artifactId>os-maven-plugin</artifactId>-->
+<!--                <version>${os-maven-plugin.version}</version>-->
+<!--            </extension>-->
+<!--        </extensions>-->
         <plugins>
             <plugin>
-                <groupId>org.xolstice.maven.plugins</groupId>
-                <artifactId>protobuf-maven-plugin</artifactId>
-                <version>${protobuf.plugin.version}</version>
-                <extensions>true</extensions>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <configuration>
-                    <!-- 工具版本 -->
-                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>
-                    <!--默认值，proto源文件路径-->
-                    <protoSourceRoot>src/main/protoc</protoSourceRoot>
-                    <!--默认值，proto目标java文件路径-->
-                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
-                    <!--设置是否在生成java文件之前清空outputDirectory的文件，默认值为true，设置为false时也会覆盖同名文件-->
-                    <clearOutputDirectory>false</clearOutputDirectory>
-
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.2.1</version>
                 <executions>
                     <execution>
-                        <!--在执行mvn compile的时候会执行以下操作-->
-                        <phase>compile</phase>
+                        <id>attach-sources</id>
                         <goals>
-                            <!--生成OuterClass类-->
-                            <goal>compile</goal>
-                            <!--生成Grpc类-->
-                            <!--goal>compile-custom</goal-->
+                            <goal>jar</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.9.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                        <configuration>
+                            <additionalparam>-Xdoclint:none</additionalparam>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <id>sign-artifacts</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>sign</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Nexus Staging Maven插件是将组件部署到OSSRH并将其发布到Central Repository的推荐方法-->
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>1.6.7</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <serverId>ossrh</serverId>
+                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
+                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                </configuration>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.xolstice.maven.plugins</groupId>-->
+<!--                <artifactId>protobuf-maven-plugin</artifactId>-->
+<!--                <version>${protobuf.plugin.version}</version>-->
+<!--                <extensions>true</extensions>-->
+<!--                <configuration>-->
+<!--                    &lt;!&ndash; 工具版本 &ndash;&gt;-->
+<!--                    <protocArtifact>com.google.protobuf:protoc:${protobuf.version}:exe:${os.detected.classifier}</protocArtifact>-->
+<!--                    &lt;!&ndash;默认值，proto源文件路径&ndash;&gt;-->
+<!--                    <protoSourceRoot>src/main/protoc</protoSourceRoot>-->
+<!--                    &lt;!&ndash;默认值，proto目标java文件路径&ndash;&gt;-->
+<!--                    <outputDirectory>${project.basedir}/src/main/java</outputDirectory>-->
+<!--                    &lt;!&ndash;设置是否在生成java文件之前清空outputDirectory的文件，默认值为true，设置为false时也会覆盖同名文件&ndash;&gt;-->
+<!--                    <clearOutputDirectory>false</clearOutputDirectory>-->
+
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        &lt;!&ndash;在执行mvn compile的时候会执行以下操作&ndash;&gt;-->
+<!--                        <phase>compile</phase>-->
+<!--                        <goals>-->
+<!--                            &lt;!&ndash;生成OuterClass类&ndash;&gt;-->
+<!--                            <goal>compile</goal>-->
+<!--                            &lt;!&ndash;生成Grpc类&ndash;&gt;-->
+<!--                            &lt;!&ndash;goal>compile-custom</goal&ndash;&gt;-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>
