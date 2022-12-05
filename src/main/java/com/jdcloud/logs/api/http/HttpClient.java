@@ -10,7 +10,6 @@ import com.jdcloud.logs.api.http.error.HttpErrorCode;
 import com.jdcloud.logs.api.util.UserAgentUtils;
 import com.jdcloud.sdk.auth.Credentials;
 import com.jdcloud.sdk.auth.sign.SignatureComposer;
-import com.jdcloud.sdk.constant.ParameterConstant;
 import com.jdcloud.sdk.model.SignRequest;
 import com.jdcloud.sdk.service.JdcloudHttpResponse;
 import com.jdcloud.sdk.service.JdcloudResponse;
@@ -25,9 +24,7 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.concurrent.*;
 
 /**
@@ -255,7 +252,4 @@ public class HttpClient {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println(TimeUnit.NANOSECONDS.toMillis(209424905));
-    }
 }
