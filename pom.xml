@@ -6,7 +6,7 @@
 
     <groupId>com.jdcloud.logs</groupId>
     <artifactId>log-api</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 
     <name>JDCloud LOG Java SDK</name>
     <url>http://jdcloud.com</url>

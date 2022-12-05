@@ -50,6 +50,6 @@ for (int i = 0; i < 10; i++) {
 <dependency>
     <groupId>com.jdcloud.logs</groupId>
     <artifactId>log-api</artifactId>
-    <version>0.1.0</version>
+    <version>0.2.0</version>
 </dependency>
 ```
