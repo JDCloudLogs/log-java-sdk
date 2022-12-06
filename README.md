@@ -1,9 +1,9 @@
 # JDCloud log service java sdk
 log-api 是对日志服务api封装的SDK
-### 注意
+## 注意
 为了提高效率和吞吐量，请尽量不要直接使用该SDK往日志服务中写数据，写数据请使用 log-producer SDK
 
-### sample 1 : 构建logClient
+## sample 1 : 构建logClient
 ```
 
 ClientConfig clientConfig = new ClientConfig("accessKeyId", "secretAccessKey", "regionId", "endpoint");
@@ -11,7 +11,7 @@ LogClient logClient = new LogClient(clientConfig);
 
 ```
 
-### sample 2 : 写数据
+## sample 2 : 写数据
 ```
 
 for (int i = 0; i < 10; i++) {
